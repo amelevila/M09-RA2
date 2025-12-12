@@ -7,16 +7,12 @@ public class Fil extends Thread {
         this.estricte = estricte;
     }
 
-    public String getNom() {
-        return nom;
-    }
-
     @Override
     public void run() {
         for (int i = 1; i < 10; i++) {
             if (estricte) {
                 try {
-                    sleep(1);
+                    Thread.sleep(1);
                 } catch (InterruptedException e) {
                     System.out.println(e);
                 }
