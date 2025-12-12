@@ -14,11 +14,9 @@ public class Fil extends Thread {
     @Override
     public void run() {
         for (int i = 1; i < 10; i++) {
-            
-
             if (estricte) {
                 try {
-                    sleep(200);
+                    sleep(1);
                 } catch (InterruptedException e) {
                     System.out.println(e);
                 }
@@ -30,7 +28,7 @@ public class Fil extends Thread {
                     comptador++;
                 }
             }
-            System.out.println(nom + " " + i);
+            System.out.printf("%s %d\n", nom, i);
         }
 
         System.out.println("Acaba el fil " + nom);

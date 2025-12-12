@@ -3,8 +3,8 @@ public class PrincipalIguals {
         Fil pepe = new Fil("Pepe", false);
         Fil juan = new Fil("Juan", false);
 
-        pepe.setPriority(Thread.MAX_PRIORITY);
-        juan.setPriority(Thread.MAX_PRIORITY);
+        pepe.setPriority(Thread.MIN_PRIORITY);
+        juan.setPriority(Thread.MIN_PRIORITY);
 
         pepe.start();
         juan.start();
