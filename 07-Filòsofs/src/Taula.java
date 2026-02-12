@@ -17,7 +17,7 @@ public class Taula {
 
     public void showTaula() {
         for (Filosof fil : comensals) {
-            System.out.printf("Comensal:%s esq:%n dret:%n", 
+            System.out.printf("Comensal:%s esq:%d dret:%d%n", 
             fil.getName(), fil.getEsquerra().getNum(), fil.getDreta().getNum());
         }
     }

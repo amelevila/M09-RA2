@@ -30,27 +30,30 @@ public class Filosof extends Thread {
             agafaForquilla(esquerra, "esquerra");
             if (!dreta.isEnUs()) {
                 agafaForquilla(dreta, "dreta");
+                System.out.printf("Filòsof: %s menja%n", this.getName());
                 gana=0;
-                System.out.printf("Filòsof: %s menja", this.getName());
                 t = ThreadLocalRandom.current().nextInt(1000, 2001);
                 try {
                     sleep(t);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                esquerra.setEnUs(false);
+                dreta.setEnUs(false);
+                System.out.printf("Filòsof: %s ha acabat de menjar%n", this.getName());
             }
             else {
                 esquerra.setEnUs(false);
-                System.out.printf("Filòsof: %s deixa l'esquerra(%n) i espera (dreta ocupada)",
+                System.out.printf("Filòsof: %s deixa l'esquerra(%d) i espera (dreta ocupada)%n",
                 this.getName(), esquerra.getNum());
                 gana++;
-                System.out.printf("Filòsof: %s gana=%n", this.getName(), gana);
+                System.out.printf("Filòsof: %s gana=%d%n", this.getName(), gana);
             }
         }
     }
 
     public void pensar() {
-        System.out.printf("Filòsof: %s pensant", this.getName());
+        System.out.printf("Filòsof: %s pensant%n", this.getName());
         int t = ThreadLocalRandom.current().nextInt(1000, 2001);
         try {
             sleep(t);
@@ -61,12 +64,15 @@ public class Filosof extends Thread {
 
     @Override
     public void run() {
-
+        while (true) {
+            menjar();
+            pensar();
+        }
     }
 
     private void agafaForquilla(Forquilla forquilla, String posicio) {
         
-        System.out.printf("Filòsof: %s agafa la forquilla %s %n", 
+        System.out.printf("Filòsof: %s agafa la forquilla %s %d%n", 
         this.getName(), posicio, forquilla.getNum());
         forquilla.setEnUs(true);
     }
