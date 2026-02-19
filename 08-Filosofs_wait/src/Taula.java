@@ -10,9 +10,9 @@ public class Taula {
         
         comensals = new Filosof[n];
         for (int i = 0; i<n-1; i++) {
-            comensals[i] = new Filosof("fil" + i, forquilles[i], forquilles[i+1]);
+            comensals[i] = new Filosof(i, forquilles[i], forquilles[i+1]);
         }
-        comensals[n-1] = new Filosof("fil" + (n-1), forquilles[n-1], forquilles[0]);
+        comensals[n-1] = new Filosof((n-1), forquilles[n-1], forquilles[0]);
     }
 
     public void showTaula() {

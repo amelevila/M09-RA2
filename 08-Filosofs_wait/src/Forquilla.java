@@ -5,10 +5,15 @@ public class Forquilla {
 
     public Forquilla(int num) {
         this.num = num;
+        this.numPropietari = LLIURE;
     }
 
     public int getNum() {
         return this.num;
+    }
+
+    public int getLliure() {
+        return this.LLIURE;
     }
 
     public int getNumPropietari() {
