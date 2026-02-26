@@ -20,6 +20,7 @@ public class Taula {
             System.out.printf("Comensal:%s esq:%d dret:%d%n", 
             fil.getName(), fil.getEsquerra().getNum(), fil.getDreta().getNum());
         }
+        System.out.println("-----------------------------");
     }
 
     public void cridarATaula() {

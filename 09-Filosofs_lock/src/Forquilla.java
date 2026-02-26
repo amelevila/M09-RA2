@@ -1,26 +1,23 @@
+import java.util.concurrent.locks.ReentrantLock;
+
 public class Forquilla {
     private final int num;
-    private int numPropietari;
-    private final int LLIURE = -1;
+    private final ReentrantLock bloqueig;
 
     public Forquilla(int num) {
         this.num = num;
-        this.numPropietari = LLIURE;
+        this.bloqueig = new ReentrantLock();
     }
 
     public int getNum() {
         return this.num;
     }
 
-    public int getLliure() {
-        return this.LLIURE;
+    public void agafar() {
+        bloqueig.lock();
     }
 
-    public int getNumPropietari() {
-        return numPropietari;
-    }
-
-    public void setNumPropietari(int numPropietari) {
-        this.numPropietari = numPropietari;
+    public void deixar() {
+        bloqueig.unlock();
     }
 }

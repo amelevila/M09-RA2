@@ -3,15 +3,17 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Filosof extends Thread {
     private final Forquilla esquerra;
     private final Forquilla dreta;
-    private final int num;
+    private long iniciGana;
+    private long fiGana;
+    private int gana;
 
     public Filosof(int num, Forquilla esquerra, Forquilla dreta) {
-        super("Fil " + num);
-        this.num = num;
+        super("Fil" + num);
         this.esquerra = esquerra;
         this.dreta = dreta;
+        this.gana = 0;
     }
-    
+
     public Forquilla getEsquerra() {
         return this.esquerra;
     }
@@ -24,22 +26,33 @@ public class Filosof extends Thread {
         try {
             agafarForquilles();
 
-            System.out.printf("Filòsof: %s menja%n", this.getName());
+            fiGana = System.currentTimeMillis();
+            gana = calcularGana();
+
+            System.out.printf("%s té forquilles esq(%d) dreta(%d)%n",
+                    this.getName(), esquerra.getNum(), dreta.getNum());
+
+            System.out.printf("%s menja amb gana %d%n",
+                    this.getName(), gana);
 
             int t = ThreadLocalRandom.current().nextInt(1000, 2001);
-        
             sleep(t);
-            } catch (InterruptedException e) {
+
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        System.out.printf("Filòsof: %s ha acabat de menjar%n", this.getName());
+        resetGana();
         deixarForquilles();
     }
 
     public void pensar() {
-        System.out.printf("Filòsof: %s pensant%n", this.getName());
+        System.out.printf("%s pensant%n", getName());
+
+        iniciGana = System.currentTimeMillis();
+
         int t = ThreadLocalRandom.current().nextInt(1000, 2001);
+
         try {
             sleep(t);
         } catch (InterruptedException e) {
@@ -56,35 +69,33 @@ public class Filosof extends Thread {
     }
 
     private void agafarForquillaEsquerra() {
-        esquerra.setNumPropietari(num);
+        esquerra.agafar();
     }
 
     private void agafarForquillaDreta() {
-        dreta.setNumPropietari(num);
+        dreta.agafar();
     }
 
-    private void agafarForquilles() throws InterruptedException {
-        synchronized (esquerra) {
-            while (dreta.getNumPropietari() != dreta.getLliure()) {
-                esquerra.wait(); 
-            }
-            agafarForquillaEsquerra();
-
-            synchronized (dreta) {
-                agafarForquillaDreta();
-            }
-        }
+    private void agafarForquilles() {
+        agafarForquillaEsquerra();
+        agafarForquillaDreta();
     }
 
     private void deixarForquilles() {
-        synchronized (esquerra) {
-            esquerra.setNumPropietari(esquerra.getLliure());
-            esquerra.notifyAll();
-        }
+        dreta.deixar();
+        esquerra.deixar();
+    }
 
-        synchronized (dreta) {
-            dreta.setNumPropietari(dreta.getLliure());
-            dreta.notifyAll();
-        }
+    private int calcularGana() {
+        return (int) (fiGana - iniciGana)/1000;
+    }
+
+    private void resetGana() {
+        iniciGana = System.currentTimeMillis();
+        gana = 0;
+    }
+
+    public long getGana() {
+        return this.gana;
     }
 }
